@@ -3,6 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 const sharp = require('sharp');
+<img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1500" alt="Bloor Street Shopping" />
 
 const inputDir = path.join(__dirname, '..', 'public', 'images'); // ضع صورك هنا
 const outDir = inputDir; // نستخرج نفس المجلد بصيغ جديدة
