@@ -163,7 +163,6 @@ function CountUp({ end = 0, duration = 1200, decimals = 0, suffix = "" }) {
   const started = useRef(false);
   const rafRef = useRef(null);
 
-  // 1. تغليف دالة start بـ useCallback لمنع إعادة تعريفها في كل رندر
   const start = useCallback(() => {
     const startTime = performance.now();
     const from = 0;
@@ -188,7 +187,7 @@ function CountUp({ end = 0, duration = 1200, decimals = 0, suffix = "" }) {
     }
 
     rafRef.current = requestAnimationFrame(frame);
-  }, [end, duration]); // تعتمد فقط على القيمة النهائية والمدة
+  }, [end, duration]); 
 
   useEffect(() => {
     const node = ref.current;
@@ -215,9 +214,8 @@ function CountUp({ end = 0, duration = 1200, decimals = 0, suffix = "" }) {
       obs.disconnect();
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
-  }, [start]); // الآن نضع start هنا بأمان لأنها مغلفة بـ useCallback
+  }, [start]);
 
-  // تنسيق الأرقام
   const formatted =
     decimals > 0
       ? (
