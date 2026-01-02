@@ -62,12 +62,14 @@ npm install
 # Start the development server
 npm start
 
-
+```
 Docker Deployment
 To simulate the production environment locally:
+```bash
 
 # Build and launch containers
 docker-compose up --build
+```
 
 The application will be accessible at http://localhost:3000.
 
@@ -84,11 +86,13 @@ The project is evolving from a static showcase to a full-stack platform:
 [ ] Auth System: Protected routes for executive clients and administrators.
 
 👤 Author
+
 Mahmoud Bousbih
+💼 Full-Stack Developer
 
 GitHub: @mahmoudBH
-
-Portfolio: toronto-apartments.vercel.app
+Portfolio: https://toronto-apartments.vercel.app/
 
 📄 License
 This project is licensed under the MIT License.
+Feel free to use, modify, and distribute.
