@@ -1,5 +1,5 @@
 // src/components/Apartments.js
-import React, { useState, useMemo, useRef, useEffect } from "react";
+import { useState, useMemo, useRef, useEffect } from "react";
 import styled from "styled-components";
 import { FiSearch, FiCheck, FiMapPin, FiArrowRight } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";

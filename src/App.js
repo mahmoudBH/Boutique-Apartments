@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { createGlobalStyle } from "styled-components";
 import Lenis from "lenis";
 import { motion, AnimatePresence } from "framer-motion";
