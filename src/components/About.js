@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useCallback } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 
@@ -162,6 +163,33 @@ function CountUp({ end = 0, duration = 1200, decimals = 0, suffix = "" }) {
   const started = useRef(false);
   const rafRef = useRef(null);
 
+  // 1. تغليف دالة start بـ useCallback لمنع إعادة تعريفها في كل رندر
+  const start = useCallback(() => {
+    const startTime = performance.now();
+    const from = 0;
+    const to = Number(end);
+
+    function easeOutCubic(t) {
+      return 1 - Math.pow(1 - t, 3);
+    }
+
+    function frame(now) {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = easeOutCubic(progress);
+      const current = from + (to - from) * eased;
+      setValue(current);
+
+      if (progress < 1) {
+        rafRef.current = requestAnimationFrame(frame);
+      } else {
+        setValue(to);
+      }
+    }
+
+    rafRef.current = requestAnimationFrame(frame);
+  }, [end, duration]); // تعتمد فقط على القيمة النهائية والمدة
+
   useEffect(() => {
     const node = ref.current;
     if (!node) {
@@ -182,39 +210,14 @@ function CountUp({ end = 0, duration = 1200, decimals = 0, suffix = "" }) {
     );
 
     obs.observe(node);
+    
     return () => {
       obs.disconnect();
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
-  }, [end, duration, decimals, suffix]);
+  }, [start]); // الآن نضع start هنا بأمان لأنها مغلفة بـ useCallback
 
-  function easeOutCubic(t) {
-    return 1 - Math.pow(1 - t, 3);
-  }
-
-  function start() {
-    const startTime = performance.now();
-    const from = 0;
-    const to = Number(end);
-
-    function frame(now) {
-      const elapsed = now - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = easeOutCubic(progress);
-      const current = from + (to - from) * eased;
-      setValue(current);
-
-      if (progress < 1) {
-        rafRef.current = requestAnimationFrame(frame);
-      } else {
-        setValue(to);
-      }
-    }
-
-    rafRef.current = requestAnimationFrame(frame);
-  }
-
-  // formatting
+  // تنسيق الأرقام
   const formatted =
     decimals > 0
       ? (
